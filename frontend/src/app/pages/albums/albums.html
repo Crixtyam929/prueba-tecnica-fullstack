@@ -4,15 +4,18 @@
 <div class="container">
 
   <div class="search">
-    <input
-      type="number"
-      placeholder="Enter User ID"
-      [(ngModel)]="userId"
-    />
+
+    <select [(ngModel)]="selectedUserId">
+      <option value="">Select a user</option>
+      <option *ngFor="let user of users" [value]="user.id">
+        {{ user.name }}
+      </option>
+    </select>
 
     <button (click)="searchAlbums()">
       Search
     </button>
+
   </div>
 
   <p *ngIf="errorMessage" class="error">

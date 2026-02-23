@@ -53,13 +53,25 @@
     <h2>{{ showCreateModal ? 'Create Log' : 'Edit Log' }}</h2>
 
     <label>HTTP Method</label>
-    <input [(ngModel)]="selectedLog.httpMethod" />
+    <select [(ngModel)]="selectedLog.httpMethod">
+      <option value="">Select method</option>
+      <option value="GET">GET</option>
+      <option value="POST">POST</option>
+      <option value="PUT">PUT</option>
+      <option value="DELETE">DELETE</option>
+    </select>
 
     <label>Endpoint</label>
     <input [(ngModel)]="selectedLog.endpoint" />
 
     <label>Status</label>
-    <input type="number" [(ngModel)]="selectedLog.status" />
+    <input
+      type="number"
+      [(ngModel)]="selectedLog.status"
+      min="100"
+      max="599"
+      maxlength="3"
+    />
 
     <label>Response</label>
     <textarea [(ngModel)]="selectedLog.response"></textarea>
@@ -73,11 +85,23 @@
   </div>
 </div>
 
+<!-- VALIDATION MODAL -->
+<div class="modal-backdrop top-layer" *ngIf="showValidationModal">
+  <div class="modal small">
+    <h2>Error</h2>
+    <p>{{ validationMessage }}</p>
+
+    <div class="modal-actions">
+      <button (click)="showValidationModal = false">OK</button>
+    </div>
+  </div>
+</div>
+
 <!-- DELETE MODAL -->
 <div class="modal-backdrop" *ngIf="showDeleteModal">
   <div class="modal">
     <h2>Confirm Delete</h2>
-    <p>Are you sure you want to delete this log?</p>
+    <p>¿Deseas eliminar este registro?</p>
 
     <div class="modal-actions">
       <button class="danger" (click)="deleteLog()">Delete</button>
