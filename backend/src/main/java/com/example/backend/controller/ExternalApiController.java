@@ -46,6 +46,17 @@ public class ExternalApiController {
         return response;
     }
 
+    @GetMapping("/posts/user/{userId}")
+    public String getPostsByUser(@PathVariable Long userId) {
+
+        String response = client.getPostsByUser(userId);
+
+        saveLog("GET", "/posts?userId=" + userId, 200, response);
+
+        return response;
+    }
+
+
     @GetMapping("/albums/{userId}")
     public String getAlbumsByUser(@PathVariable Long userId) {
         String response = client.getAlbumsByUser(userId);
