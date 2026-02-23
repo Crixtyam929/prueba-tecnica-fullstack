@@ -147,14 +147,14 @@ export class Users {
     this.errorMessage = '';
     this.cdr.detectChanges();
 
-    this.apiService.simulateError().subscribe({
+    this.apiService.getUsers(true).subscribe({
       next: () => {},
       error: (err: HttpErrorResponse) => {
 
         if (err.status === 0) {
           this.errorMessage = 'No se pudo conectar con el servidor.';
         } else {
-          this.errorMessage = err.error || 'Se produjo un error simulado.';
+          this.errorMessage = err.error;
         }
 
         this.cdr.detectChanges();

@@ -27,7 +27,7 @@ public class ExternalApiController {
     public String getUsers(@RequestParam(required = false) Boolean simulateError) {
 
         if (Boolean.TRUE.equals(simulateError)) {
-            throw new ApiSimulationException("Simulación de error 400");
+            throw new ApiSimulationException("Error simulado intencionalmente (500)");
         }
 
         String response = client.getUsers();

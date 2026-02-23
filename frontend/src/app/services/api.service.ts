@@ -15,7 +15,12 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<User[]> {
+  getUsers(simulateError?: boolean): Observable<User[]> {
+
+    if (simulateError) {
+      return this.http.get<User[]>(`${this.baseUrl}/users?simulateError=true`);
+    }
+
     return this.http.get<User[]>(`${this.baseUrl}/users`);
   }
 
