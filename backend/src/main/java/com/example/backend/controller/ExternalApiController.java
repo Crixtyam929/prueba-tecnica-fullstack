@@ -4,6 +4,8 @@ import com.example.backend.client.ExternalApiClient;
 import com.example.backend.model.LogRequest;
 import com.example.backend.service.LogRequestService;
 import org.springframework.web.bind.annotation.*;
+import com.example.backend.exception.ApiSimulationException;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 
@@ -22,13 +24,18 @@ public class ExternalApiController {
     }
 
     @GetMapping("/users")
-    public String getUsers() {
-        String response = client.getUsers();
+    public String getUsers(@RequestParam(required = false) Boolean simulateError) {
 
+        if (Boolean.TRUE.equals(simulateError)) {
+            throw new ApiSimulationException("Simulación de error 400");
+        }
+
+        String response = client.getUsers();
         saveLog("GET", "/users", 200, response);
 
         return response;
     }
+
 
     @GetMapping("/posts")
     public String getPosts() {
