@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGenericException(Exception ex) {
+    public ResponseEntity<String> handleGenericException(Exception ignored) {
 
         LogRequest log = LogRequest.builder()
                 .date(LocalDateTime.now())
