@@ -1,12 +1,10 @@
 package com.example.backend.exception;
-
 import com.example.backend.model.LogRequest;
 import com.example.backend.service.LogRequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -35,5 +33,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGenericException(Exception ex) {
+
+        LogRequest log = LogRequest.builder()
+                .date(LocalDateTime.now())
+                .httpMethod("UNKNOWN")
+                .endpoint("UNKNOWN")
+                .status(500)
+                .response("Error interno no controlado")
+                .build();
+
+        logService.save(log);
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Ocurrió un error inesperado en el servidor");
     }
 }
